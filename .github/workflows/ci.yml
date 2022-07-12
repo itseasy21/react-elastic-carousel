@@ -15,6 +15,7 @@ jobs:
 
     - run: yarn set version 3.2.1
     - run: yarn install
+    - run: npm install -g gatsby-cli
     - run: yarn build
     - run: yarn build-doc
     - run: yarn test
