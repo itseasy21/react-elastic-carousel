@@ -91,4 +91,4 @@ The application is running at http://localhost:8888
 
 ## License
 
-MIT
+MIT © [`sag1v`](https://github.com/sag1v) & [`itseasy21`](https://github.com/itseasy21)
