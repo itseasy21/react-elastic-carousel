@@ -1,6 +1,6 @@
 # @itseasy21/react-elastic-carousel
 
-> A flexible and responsive carousel component for react, a fork of [react-elastic-carousel by sag1v](https://github.com/sag1v/react-elastic-carousel) 
+> A flexible and responsive carousel component for react, a fork of [react-elastic-carousel](https://github.com/sag1v/react-elastic-carousel) 
 
 [![NPM](https://img.shields.io/npm/v/@itseasy21/react-elastic-carousel.svg?style=flat-square)](https://www.npmjs.com/package/@itseasy21/react-elastic-carousel) ![npm](https://img.shields.io/npm/dw/@itseasy21/react-elastic-carousel?style=flat-square)
 
@@ -13,23 +13,23 @@
 - **RTL (right-to-left) support**  
   Supporting right-to-left languages requires a full support for right-to-left rendering and animations which is not supported in most of the carousel components out there. also, right-to-left support is [important and should be a standard for most applications](https://www.youtube.com/watch?v=A_3BfONFRUc).
 
-## [Live Demos & Docs](https://sag1v.github.io/react-elastic-carousel/)
+## [Live Demos & Docs](https://itseasy21.github.io/react-elastic-carousel/)
 
 ## Install
 
 ```bash
-npm install --save react-elastic-carousel
+npm install --save @itseasy21/react-elastic-carousel
 ```
 
 or
 
 ```bash
-yarn add react-elastic-carousel
+yarn add @itseasy21/react-elastic-carousel
 ```
 
 ### Note
 
-`react-elastic-carousel` is using [styled-components](https://github.com/styled-components/styled-components) for styling, this means that you should install it as well:
+`@itseasy21/react-elastic-carousel` is using [styled-components](https://github.com/styled-components/styled-components) for styling, this means that you should install it as well:
 
 ```bash
 npm install --save styled-components
@@ -65,12 +65,12 @@ class App extends Component {
 
 ## Playground
 
-[![Edit react-elastic-carousel](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/21o46mkwnr)
+[![Edit react-elastic-carousel](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/react-elastic-carousel-forked-qkc31r?file=/src/index.js)
 
 ## Development
 
 ```console
-git clone https://github.com/sag1v/react-elastic-carousel.git
+git clone https://github.com/itseasy21/react-elastic-carousel.git
 cd react-elastic-carousel
 yarn
 ```
@@ -91,4 +91,4 @@ The application is running at http://localhost:8888
 
 ## License
 
-MIT © [sag1v](https://github.com/sag1v)
+MIT
