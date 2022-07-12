@@ -1,9 +1,8 @@
+# @itseasy21/react-elastic-carousel
 
-# react-elastic-carousel
+> A flexible and responsive carousel component for react, a fork of [react-elastic-carousel by sag1v](https://github.com/sag1v/react-elastic-carousel) 
 
-> A flexible and responsive carousel component for react
-
-[![NPM](https://img.shields.io/npm/v/react-elastic-carousel.svg?style=flat-square)](https://www.npmjs.com/package/react-elastic-carousel) ![npm](https://img.shields.io/npm/dw/react-elastic-carousel?style=flat-square) ![npm bundle size](https://img.shields.io/bundlephobia/min/react-elastic-carousel?style=flat-square)
+[![NPM](https://img.shields.io/npm/v/@itseasy21/react-elastic-carousel.svg?style=flat-square)](https://www.npmjs.com/package/@itseasy21/react-elastic-carousel) ![npm](https://img.shields.io/npm/dw/@itseasy21/react-elastic-carousel?style=flat-square)
 
 ## Why do we need yet another carousel component
 
@@ -40,7 +39,7 @@ npm install --save styled-components
 
 ```jsx
 import React, { Component } from 'react';
-import Carousel from 'react-elastic-carousel';
+import Carousel from '@itseasy21/react-elastic-carousel';
 
 class App extends Component {
   state = {

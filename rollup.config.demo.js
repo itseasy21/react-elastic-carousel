@@ -6,12 +6,12 @@ import url from "rollup-plugin-url";
 import alias from "rollup-plugin-alias";
 import serve from "rollup-plugin-serve";
 import replace from "@rollup/plugin-replace";
-import livereload from 'rollup-plugin-livereload'
+import livereload from "rollup-plugin-livereload";
 
 import libName from "./libName";
 
-import * as ReactNamedExports from 'react';
-import * as ReactIsNamedExports from 'react-is';
+import * as ReactNamedExports from "react";
+import * as ReactIsNamedExports from "react-is";
 
 export default {
   input: `demoApp/src/index.js`,
@@ -20,37 +20,37 @@ export default {
       file: "demoApp/dist/bundle.js",
       format: "cjs",
       sourcemap: true,
-      exports: "named",
-    },
+      exports: "named"
+    }
   ],
   plugins: [
     alias({
-      "react-elastic-carousel": `src/${libName}/index.js`,
+      "react-elastic-carousel": `src/${libName}/index.js`
     }),
-    //external(),
+    // external(),
     postcss({
-      modules: false,
+      modules: false
     }),
     url(),
     babel({
       exclude: "node_modules/**",
-      plugins: ["@babel/external-helpers"],
+      plugins: ["@babel/external-helpers"]
     }),
     resolve(),
     commonjs({
       include: "node_modules/**",
       namedExports: {
         "node_modules/react-is/index.js": Object.keys(ReactIsNamedExports),
-        "node_modules/react/index.js": Object.keys(ReactNamedExports),
-      },
+        "node_modules/react/index.js": Object.keys(ReactNamedExports)
+      }
     }),
     serve({
       open: true,
-      contentBase: "demoApp/dist",
+      contentBase: "demoApp/dist"
     }),
     livereload(),
     replace({
-      "process.env.NODE_ENV": JSON.stringify("production"),
-    }),
-  ],
+      "process.env.NODE_ENV": JSON.stringify("production")
+    })
+  ]
 };
