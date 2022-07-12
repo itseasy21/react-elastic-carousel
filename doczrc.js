@@ -1,7 +1,3 @@
-import pkg from "./package.json";
-
-const libName = pkg.name;
-
 export default {
   ignore: [
     "README.md",
@@ -14,7 +10,7 @@ export default {
   dest: "./demo",
   port: 8888,
   hashRouter: true,
-  base: `/${libName}/`,
+  base: "/react-elastic-carousel/",
   menu: [
     "Getting started",
     {
