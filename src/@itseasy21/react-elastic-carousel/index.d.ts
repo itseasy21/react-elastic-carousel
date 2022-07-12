@@ -28,6 +28,7 @@ export type Breakpoint = {
 };
 
 export interface ReactElasticCarouselProps {
+  children?: React.ReactNode;
   className?: string;
   // Defaults to 1
   itemsToShow?: number;
