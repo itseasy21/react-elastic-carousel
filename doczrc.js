@@ -1,48 +1,49 @@
-import path from 'path'
-import pkg from './package.json';
-
-const libName = pkg.name;
-
 export default {
-  ignore: ['README.md', 'changelog.md', 'CODE_OF_CONDUCT.md', 'contributing.md', 'LICENSE.md'],
-  //src: './src',
-  dest: './demo',
+  ignore: [
+    "README.md",
+    "changelog.md",
+    "CODE_OF_CONDUCT.md",
+    "contributing.md",
+    "LICENSE.md"
+  ],
+  // src: './src',
+  dest: "./demo",
   port: 8888,
   hashRouter: true,
-  base: `/${libName}/`,
+  base: "/react-elastic-carousel/",
   menu: [
     "Getting started",
     {
-      name: 'Examples',
+      name: "Examples",
       menu: [
-        'itemsToScroll',
-        'itemsToShow',
-        'breakPoints',
-        'verticalMode',
-        'initialActiveIndex',
-        'focusOnSelect',
-        'isRTL',
-        'enableAutoPlay',
-        'itemPadding',
-        'outerSpacing',
-        'showEmptySlots',
-        'itemPosition',
-        'easing',
-        'renderArrow',
-        'renderPagination',
-        'autoTabIndexVisibleItems',
-        'onChange',
-        'onNextStart',
-        'onNextEnd',
-        'onPrevStart',
-        'onPrevEnd',
-        'onResize',
-        'slideNext / slidePrev',
-        'goTo',
-        'Styling'
+        "itemsToScroll",
+        "itemsToShow",
+        "breakPoints",
+        "verticalMode",
+        "initialActiveIndex",
+        "focusOnSelect",
+        "isRTL",
+        "enableAutoPlay",
+        "itemPadding",
+        "outerSpacing",
+        "showEmptySlots",
+        "itemPosition",
+        "easing",
+        "renderArrow",
+        "renderPagination",
+        "autoTabIndexVisibleItems",
+        "onChange",
+        "onNextStart",
+        "onNextEnd",
+        "onPrevStart",
+        "onPrevEnd",
+        "onResize",
+        "slideNext / slidePrev",
+        "goTo",
+        "Styling"
       ]
     }
-  ],
+  ]
   // htmlContext: {
   //   head: {
   //     scripts: [
@@ -83,4 +84,4 @@ export default {
   //     },
   //   }
   // },
-}
+};

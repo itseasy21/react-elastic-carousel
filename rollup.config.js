@@ -1,28 +1,28 @@
-import babel from 'rollup-plugin-babel';
-import commonjs from 'rollup-plugin-commonjs';
+import babel from "rollup-plugin-babel";
+import commonjs from "rollup-plugin-commonjs";
 import copy from "rollup-plugin-copy";
 import external from "rollup-plugin-auto-external";
-import postcss from 'rollup-plugin-postcss';
-import resolve from 'rollup-plugin-node-resolve';
-import url from 'rollup-plugin-url';
-import alias from 'rollup-plugin-alias';
+import postcss from "rollup-plugin-postcss";
+import resolve from "rollup-plugin-node-resolve";
+import url from "rollup-plugin-url";
+import alias from "rollup-plugin-alias";
 
-import pkg from './package.json'
+import pkg from "./package.json";
 
-import libName from './libName';
+import libName from "./libName";
 
 export default {
   input: `src/${libName}/index.js`,
   output: [
     {
       file: pkg.main,
-      format: 'cjs',
+      format: "cjs",
       sourcemap: true,
-      exports: 'named'
+      exports: "named"
     },
     {
       file: pkg.module,
-      format: 'es',
+      format: "es",
       sourcemap: true
     }
   ],
@@ -36,18 +36,18 @@ export default {
     }),
     url(),
     babel({
-      exclude: 'node_modules/**',
-      plugins: [ '@babel/external-helpers' ]
+      exclude: "node_modules/**",
+      plugins: ["@babel/external-helpers"]
     }),
     resolve(),
     commonjs({
-      include: 'node_modules/**',
+      include: "node_modules/**",
       namedExports: {
-        'node_modules/react-is/index.js': ['isValidElementType']
+        "node_modules/react-is/index.js": ["isValidElementType"]
       }
     }),
     copy({
-      targets: [{ src: `src/${libName}/index.d.ts`, dest: "dist" }],
+      targets: [{ src: `src/${libName}/index.d.ts`, dest: "dist" }]
     })
   ]
-}
+};
