@@ -1,6 +1,6 @@
 {
   "name": "@itseasy21/react-elastic-carousel",
-  "version": "0.12.1",
+  "version": "0.12.2",
   "description": "A flexible and responsive carousel component for react",
   "author": "itseasy21",
   "contributors": [
@@ -43,14 +43,14 @@
     "@uiw/react-only-when": "^1.0.6",
     "classnames": "^2.2.6",
     "prop-types": "^15.5.4",
-    "react-swipeable": "^5.5.1",
-    "resize-observer-polyfill": "1.5.0"
+    "react-swipeable": "^7.0.0",
+    "resize-observer-polyfill": "~1.5.0"
   },
   "peerDependencies": {
     "prop-types": "^15.5.4",
-    "react": "15 - 18",
-    "react-dom": "15 - 18",
-    "styled-components": "^5.1.0"
+    "react": "16.8.3 - 18",
+    "react-dom": "16.8.3 - 18",
+    "styled-components": "^5.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.3.4",
@@ -100,7 +100,6 @@
     "prettier-eslint": "^8.8.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-resizable": "^1.7.5",
     "react-scripts": "^2.1.8",
     "react-test-renderer": "^16.5.2",
     "rollup": "^0.64.1",

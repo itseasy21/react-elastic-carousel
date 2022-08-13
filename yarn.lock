@@ -2212,11 +2212,10 @@ __metadata:
     prop-types: ^15.5.4
     react: ^16.12.0
     react-dom: ^16.12.0
-    react-resizable: ^1.7.5
     react-scripts: ^2.1.8
-    react-swipeable: ^5.5.1
+    react-swipeable: ^7.0.0
     react-test-renderer: ^16.5.2
-    resize-observer-polyfill: 1.5.0
+    resize-observer-polyfill: ~1.5.0
     rollup: ^0.64.1
     rollup-plugin-alias: ^1.4.0
     rollup-plugin-auto-external: ^2.0.0
@@ -2231,9 +2230,9 @@ __metadata:
     styled-components: ^5.1.0
   peerDependencies:
     prop-types: ^15.5.4
-    react: 15 - 18
-    react-dom: 15 - 18
-    styled-components: ^5.1.0
+    react: 16.8.3 - 18
+    react-dom: 16.8.3 - 18
+    styled-components: ^5.0.0
   languageName: unknown
   linkType: soft
 
@@ -6541,7 +6540,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.2.5, classnames@npm:^2.2.6":
+"classnames@npm:^2.2.6":
   version: 2.2.6
   resolution: "classnames@npm:2.2.6"
   checksum: 09a4fda780158aa8399079898eabeeca0c48c28641d9e4de140db7412e5e346843039ded1af0152f755afc2cc246ff8c3d6f227bf0dcb004e070b7fa14ec54cc
@@ -20497,7 +20496,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.x, prop-types@npm:^15.5.10, prop-types@npm:^15.5.8, prop-types@npm:^15.6.0, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
+"prop-types@npm:^15.5.10, prop-types@npm:^15.5.8, prop-types@npm:^15.6.1, prop-types@npm:^15.6.2, prop-types@npm:^15.7.2":
   version: 15.7.2
   resolution: "prop-types@npm:15.7.2"
   dependencies:
@@ -21054,16 +21053,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-draggable@npm:^4.0.3":
-  version: 4.4.3
-  resolution: "react-draggable@npm:4.4.3"
-  dependencies:
-    classnames: ^2.2.5
-    prop-types: ^15.6.0
-  checksum: 94d3d5f0e7fd5920894915f069e393d55b46de114570a613ca56bd1f46bb5fc8dc9dbd1a254d8e09153e8261589122d1c725f722b37d454da883d0ffcc1a68bf
-  languageName: node
-  linkType: hard
-
 "react-error-overlay@npm:^3.0.0":
   version: 3.0.0
   resolution: "react-error-overlay@npm:3.0.0"
@@ -21280,19 +21269,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-resizable@npm:^1.7.5":
-  version: 1.10.1
-  resolution: "react-resizable@npm:1.10.1"
-  dependencies:
-    prop-types: 15.x
-    react-draggable: ^4.0.3
-  peerDependencies:
-    react: 0.14.x || 15.x || 16.x
-    react-dom: 0.14.x || 15.x || 16.x
-  checksum: be6c557caf671f740adf0b285b4f12b3aa9535220db57fc3e04397002870422cdf3ecadf22bd5b021463420aec76a1e19ef6f2a2b538c6d0e1c62e9967ba2a9f
-  languageName: node
-  linkType: hard
-
 "react-resize-detector@npm:^4.2.1":
   version: 4.2.3
   resolution: "react-resize-detector@npm:4.2.3"
@@ -21396,14 +21372,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-swipeable@npm:^5.5.1":
-  version: 5.5.1
-  resolution: "react-swipeable@npm:5.5.1"
-  dependencies:
-    prop-types: ^15.6.2
+"react-swipeable@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "react-swipeable@npm:7.0.0"
   peerDependencies:
-    react: ^16.0.0-0
-  checksum: 474e281c619a4ca61cede4a1c9acb712241c16c1d226145cc3af66ac77525b585b510739879dc5404ead280fcd606e5b3ed26ddd76d9eb853bf4b11578201d4b
+    react: ^16.8.3 || ^17 || ^18
+  checksum: 54d15933483f7aea8f69e6a9930e220fb3bd98f314cae89a8b797e8a3bb959b68e777fe199cd7729edfe65edfcb5d933c7312ea08626f1613a6fd5d30e646598
   languageName: node
   linkType: hard
 
@@ -22373,14 +22347,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resize-observer-polyfill@npm:1.5.0":
-  version: 1.5.0
-  resolution: "resize-observer-polyfill@npm:1.5.0"
-  checksum: ecc6aab5d4f967f1b76cee0748c1967c8b6b5d8c4393764ca3b788dbd15c0f846326c4ebff9f4f39aba45fea8016cd42bb95e28e8fab1d14349e173790c58133
-  languageName: node
-  linkType: hard
-
-"resize-observer-polyfill@npm:^1.5.1":
+"resize-observer-polyfill@npm:^1.5.1, resize-observer-polyfill@npm:~1.5.0":
   version: 1.5.1
   resolution: "resize-observer-polyfill@npm:1.5.1"
   checksum: 57e7f79489867b00ba43c9c051524a5c8f162a61d5547e99333549afc23e15c44fd43f2f318ea0261ea98c0eb3158cca261e6f48d66e1ed1cd1f340a43977094

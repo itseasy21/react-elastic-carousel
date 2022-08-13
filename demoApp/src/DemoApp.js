@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import Carousel from "../../src/react-elastic-carousel/components/Carousel";
+import Carousel from "../../src/@itseasy21/react-elastic-carousel/components/Carousel";
 import styled from "styled-components";
 
 const Item = styled.div`
@@ -33,9 +33,9 @@ const StyledControlFields = styled.div`
 
 const breakPoints = [
   { width: 200, itemsToShow: 1 },
-  { width: 600, itemsToShow: 2 },
+  { width: 600, itemsToShow: 2 }
 ];
-const toggle = (updater) => () => updater((o) => !o);
+const toggle = updater => () => updater(o => !o);
 
 const CheckBox = ({ label, onToggle, ...rest }) => {
   return (
@@ -59,11 +59,11 @@ const DemoApp = () => {
   const carouselRef = useRef();
 
   const addItem = () => {
-    setItems((currentItems) => [...currentItems, currentItems.length + 1]);
+    setItems(currentItems => [...currentItems, currentItems.length + 1]);
   };
 
   const removeItem = () => {
-    setItems((currentItems) => currentItems.slice(0, currentItems.length - 1));
+    setItems(currentItems => currentItems.slice(0, currentItems.length - 1));
   };
 
   const updateItemsToShow = ({ target }) =>
@@ -81,7 +81,7 @@ const DemoApp = () => {
     <Layout>
       <ControlsLayout>
         <StyledControlFields>
-          <button onClick={() => setShow((o) => !o)}>
+          <button onClick={() => setShow(o => !o)}>
             {`${show ? "Hide" : "Show"} Carousel`}
           </button>
         </StyledControlFields>
@@ -131,7 +131,7 @@ const DemoApp = () => {
           showArrows={showArrows}
           pagination={pagination}
         >
-          {items.map((item) => (
+          {items.map(item => (
             <Item key={item}>{item}</Item>
           ))}
         </Carousel>
