@@ -472,12 +472,12 @@ class Carousel extends React.Component {
       let swipedSliderPosition;
       if (horizontalSwipe) {
         if (isRTL) {
-          swipedSliderPosition = sliderPosition + deltaX;
-        } else {
           swipedSliderPosition = sliderPosition - deltaX;
+        } else {
+          swipedSliderPosition = sliderPosition + deltaX;
         }
       } else {
-        swipedSliderPosition = sliderPosition - deltaY;
+        swipedSliderPosition = sliderPosition + deltaY;
       }
       return {
         swipedSliderPosition,
