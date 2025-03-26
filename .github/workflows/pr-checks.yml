@@ -1,0 +1,106 @@
+name: Pull Request Checks
+
+on:
+  pull_request:
+    branches: [ master, next ]
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  validate:
+    name: Validate PR
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16, 18, 20, 22]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Setup Yarn
+        run: |
+          corepack enable
+          yarn set version 3.2.1
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Lint
+        run: yarn lint:fix
+
+      - name: Build
+        run: yarn build
+
+      - name: Run tests
+        run: yarn test
+
+  compatibility:
+    name: React compatibility check
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        react-version: [16.8.3, 18.x, 19.x]
+        node-version: [16, 18, 20, 22]
+        include:
+          - react-version: 16.8.3
+            testing-library-react-version: "12.1.5"
+          - react-version: 18.x
+            testing-library-react-version: "14.1.2"
+          - react-version: 19.x
+            testing-library-react-version: "14.1.2"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Setup Yarn
+        run: |
+          corepack enable
+          yarn set version 3.2.1
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
+
+      - name: Cache node modules
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-react-${{ matrix.react-version }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Install specific React version with compatible testing library
+        run: |
+          yarn remove @testing-library/react
+          yarn add -D react@${{ matrix.react-version }} react-dom@${{ matrix.react-version }} @testing-library/react@${{ matrix.testing-library-react-version }}
+
+      - name: Build with React ${{ matrix.react-version }}
+        run: yarn build
+
+      - name: Test with React ${{ matrix.react-version }}
+        run: yarn test 

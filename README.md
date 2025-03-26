@@ -27,9 +27,16 @@ or
 yarn add @itseasy21/react-elastic-carousel
 ```
 
+## Requirements
+
+- Node.js >= 16
+- React 16.8.3 - 19
+- React DOM 16.8.3 - 19
+- Yarn 3.2.1 (for development)
+
 ### Note
 
-`@itseasy21/react-elastic-carousel` is using [styled-components](https://github.com/styled-components/styled-components) for styling, this means that you should install it as well:
+`@itseasy21/react-elastic-carousel` is using [styled-components](https://github.com/styled-components/styled-components) (v5 or v6) for styling, this means that you should install it as well:
 
 ```bash
 npm install --save styled-components
@@ -72,6 +79,8 @@ class App extends Component {
 ```console
 git clone https://github.com/itseasy21/react-elastic-carousel.git
 cd react-elastic-carousel
+corepack enable
+yarn set version 3.2.1
 yarn
 ```
 
@@ -88,6 +97,18 @@ yarn demo
 ```
 
 The application is running at http://localhost:8888
+
+### Running tests
+
+```console
+yarn test
+```
+
+## Continuous Integration
+
+This project uses GitHub Actions for CI/CD with the following workflows:
+- **Pull Request Checks**: Linting, building, and testing with multiple React versions
+- **Build & Deploy**: Automated build, test, and deployment on pushed to main/master branch
 
 ## License
 

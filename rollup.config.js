@@ -1,17 +1,20 @@
-import babel from "rollup-plugin-babel";
-import commonjs from "rollup-plugin-commonjs";
+import { babel } from "@rollup/plugin-babel";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
+import commonjs from "@rollup/plugin-commonjs";
 import copy from "rollup-plugin-copy";
 import external from "rollup-plugin-auto-external";
 import postcss from "rollup-plugin-postcss";
-import resolve from "rollup-plugin-node-resolve";
 import url from "rollup-plugin-url";
-import alias from "rollup-plugin-alias";
+import { defineConfig } from "rollup";
+import fs from "fs";
 
-import pkg from "./package.json";
+// Read package.json directly
+const pkg = JSON.parse(fs.readFileSync("./package.json", "utf8"));
 
-import libName from "./libName";
+// Use require for libName since it's a CommonJS module
+const libName = require("./libName");
 
-export default {
+export default defineConfig({
   input: `src/${libName}/index.js`,
   output: [
     {
@@ -27,27 +30,36 @@ export default {
     }
   ],
   plugins: [
-    alias({
-      [libName]: `./src/${libName}/index.js`
-    }),
     external(),
     postcss({
-      modules: false
+      modules: false,
+      extract: false,
+      minimize: true,
+      inject: false
     }),
-    url(),
+    url({
+      limit: 10 * 1024 // inline files < 10k
+    }),
     babel({
       exclude: "node_modules/**",
-      plugins: ["@babel/external-helpers"]
+      babelHelpers: "runtime",
+      presets: ["@babel/preset-env", "@babel/preset-react"],
+      plugins: ["@babel/plugin-transform-runtime"]
     }),
-    resolve(),
+    nodeResolve({
+      browser: true
+    }),
     commonjs({
       include: "node_modules/**",
-      namedExports: {
-        "node_modules/react-is/index.js": ["isValidElementType"]
-      }
+      requireReturnsDefault: "auto"
     }),
     copy({
       targets: [{ src: `src/${libName}/index.d.ts`, dest: "dist" }]
     })
+  ],
+  external: [
+    ...Object.keys(pkg.dependencies || {}),
+    ...Object.keys(pkg.peerDependencies || {}),
+    "react/jsx-runtime"
   ]
-};
+});

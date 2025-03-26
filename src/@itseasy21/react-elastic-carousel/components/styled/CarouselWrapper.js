@@ -5,5 +5,5 @@ export default styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  direction: ${({ isRTL }) => (isRTL ? "rtl" : "ltr")};
+  direction: ${({ $isRTL }) => ($isRTL ? "rtl" : "ltr")};
 `;

@@ -1,49 +1,54 @@
 import styled from "styled-components";
 
 const calcLeft = ({
-  isRTL,
-  verticalMode,
-  isSwiping,
-  swipedSliderPosition,
-  sliderPosition
+  $isRTL,
+  $verticalMode,
+  $isSwiping,
+  $swipedSliderPosition,
+  $sliderPosition
 }) => {
-  if (verticalMode || isRTL) {
+  if ($verticalMode || $isRTL) {
     return "auto";
   } else {
-    return `${isSwiping ? swipedSliderPosition : sliderPosition}px`;
+    return `${$isSwiping ? $swipedSliderPosition : $sliderPosition}px`;
   }
 };
 
 const calcRight = ({
-  isRTL,
-  verticalMode,
-  isSwiping,
-  swipedSliderPosition,
-  sliderPosition
+  $isRTL,
+  $verticalMode,
+  $isSwiping,
+  $swipedSliderPosition,
+  $sliderPosition
 }) => {
-  if (!verticalMode && isRTL) {
-    return `${isSwiping ? swipedSliderPosition : sliderPosition}px`;
+  if (!$verticalMode && $isRTL) {
+    return `${$isSwiping ? $swipedSliderPosition : $sliderPosition}px`;
   } else {
     return "auto";
   }
 };
 
 const calcTop = ({
-  verticalMode,
-  isSwiping,
-  swipedSliderPosition,
-  sliderPosition
+  $verticalMode,
+  $isSwiping,
+  $swipedSliderPosition,
+  $sliderPosition
 }) => {
-  if (!verticalMode) {
+  if (!$verticalMode) {
     return "auto";
   } else {
-    return `${isSwiping ? swipedSliderPosition : sliderPosition}px`;
+    return `${$isSwiping ? $swipedSliderPosition : $sliderPosition}px`;
   }
 };
 
-const calcTransition = ({ isSwiping, transitionMs, easing, tiltEasing }) => {
-  const duration = isSwiping ? 0 : transitionMs;
-  const effectiveEasing = isSwiping ? tiltEasing : easing;
+const calcTransition = ({
+  $isSwiping,
+  $transitionMs,
+  $easing,
+  $tiltEasing
+}) => {
+  const duration = $isSwiping ? 0 : $transitionMs;
+  const effectiveEasing = $isSwiping ? $tiltEasing : $easing;
   return `all ${duration}ms ${effectiveEasing}`;
 };
 
@@ -58,8 +63,8 @@ export default styled.div.attrs(props => ({
 }))`
   position: absolute;
   display: flex;
-  flex-direction: ${({ verticalMode }) => (verticalMode ? "column" : "row")};
-  ${({ verticalMode }) => (verticalMode ? "min-height: 100%;" : "")};
-  ${({ verticalMode, outerSpacing }) =>
-    verticalMode ? "" : `margin: 0 ${outerSpacing}px;`};
+  flex-direction: ${({ $verticalMode }) => ($verticalMode ? "column" : "row")};
+  ${({ $verticalMode }) => ($verticalMode ? "min-height: 100%;" : "")};
+  ${({ $verticalMode, $outerSpacing }) =>
+    $verticalMode ? "" : `margin: 0 ${$outerSpacing}px;`};
 `;
