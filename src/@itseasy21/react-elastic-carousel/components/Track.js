@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { useSwipeable } from "react-swipeable";
 import { cssPrefix } from "../utils/helpers";
 import ItemWrapperContainer from "./ItemWrapperContainer";
+import consts from "../consts";
 
 const Track = ({
   children,
@@ -51,7 +52,7 @@ const Track = ({
       >
         <ItemWrapperContainer
           id={idx}
-          itemPosition={itemPosition}
+          $itemPosition={itemPosition}
           style={{ width, padding: paddingStyle }}
           key={idx}
           onClick={onItemClick}
@@ -102,6 +103,14 @@ Track.propTypes = {
   onSwiped: PropTypes.func,
   onSwiping: PropTypes.func,
   onItemClick: PropTypes.func
+};
+
+Track.defaultProps = {
+  itemPadding: [0, 0, 0, 0],
+  itemPosition: consts.CENTER,
+  enableSwipe: true,
+  enableMouseSwipe: true,
+  preventDefaultTouchmoveEvent: false
 };
 
 export default Track;

@@ -27,9 +27,15 @@ or
 yarn add @itseasy21/react-elastic-carousel
 ```
 
+## Requirements
+
+- Node.js >= 16
+- React 16.8.3 - 19
+- React DOM 16.8.3 - 19
+
 ### Note
 
-`@itseasy21/react-elastic-carousel` is using [styled-components](https://github.com/styled-components/styled-components) for styling, this means that you should install it as well:
+`@itseasy21/react-elastic-carousel` is using [styled-components](https://github.com/styled-components/styled-components) (v5 or v6) for styling, this means that you should install it as well:
 
 ```bash
 npm install --save styled-components
