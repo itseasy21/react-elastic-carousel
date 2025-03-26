@@ -9,14 +9,14 @@ const Track = ({
   children,
   childWidth,
   autoTabIndexVisibleItems,
-  enableSwipe,
-  enableMouseSwipe,
-  preventDefaultTouchmoveEvent,
+  enableSwipe = true,
+  enableMouseSwipe = true,
+  preventDefaultTouchmoveEvent = false,
   itemsToShow,
   itemsToScroll,
   currentItem,
-  itemPosition,
-  itemPadding,
+  itemPosition = consts.CENTER,
+  itemPadding = [0, 0, 0, 0],
   onSwiped,
   onSwiping,
   verticalMode,
@@ -103,14 +103,6 @@ Track.propTypes = {
   onSwiped: PropTypes.func,
   onSwiping: PropTypes.func,
   onItemClick: PropTypes.func
-};
-
-Track.defaultProps = {
-  itemPadding: [0, 0, 0, 0],
-  itemPosition: consts.CENTER,
-  enableSwipe: true,
-  enableMouseSwipe: true,
-  preventDefaultTouchmoveEvent: false
 };
 
 export default Track;

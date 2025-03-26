@@ -11,6 +11,7 @@ Each release can be found in the Github [Releases page](https://github.com/itsea
   - Added $ prefix to all custom props in styled components
   - Added support for both styled-components v5 and v6
 - Migrated from Enzyme to React Testing Library for tests
+- Replaced component `defaultProps` with JavaScript default parameters for better React 18+ compatibility
 
 ### Features
 - Added support for React 19
