@@ -21,6 +21,11 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Setup Yarn
+        run: |
+          corepack enable
+          yarn set version 3.2.1
+
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions/node@master
         env:

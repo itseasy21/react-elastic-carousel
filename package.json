@@ -21,6 +21,7 @@
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
   },
+  "packageManager": "yarn@3.2.1",
   "engines": {
     "node": ">=16",
     "npm": ">=8"
