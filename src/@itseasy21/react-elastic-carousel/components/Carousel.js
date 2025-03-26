@@ -818,7 +818,7 @@ class Carousel extends React.Component {
 
     return (
       <CarouselWrapper
-        isRTL={isRTL}
+        $isRTL={isRTL}
         className={`${cssPrefix("carousel-wrapper")} ${className}`}
         style={style}
       >
@@ -846,17 +846,17 @@ class Carousel extends React.Component {
             ref={this.setRef("sliderContainer")}
           >
             <Slider
-              verticalMode={verticalMode}
-              isRTL={isRTL}
-              easing={easing}
-              sliderPosition={sliderPosition}
-              swipedSliderPosition={swipedSliderPosition}
-              isSwiping={isSwiping}
-              transitionMs={transitionMs}
-              tiltEasing={tiltEasing}
+              $verticalMode={verticalMode}
+              $isRTL={isRTL}
+              $easing={easing}
+              $sliderPosition={sliderPosition}
+              $swipedSliderPosition={swipedSliderPosition}
+              $isSwiping={isSwiping}
+              $transitionMs={transitionMs}
+              $tiltEasing={tiltEasing}
               className={cssPrefix("slider")}
               ref={this.setRef("slider")}
-              outerSpacing={outerSpacing}
+              $outerSpacing={outerSpacing}
             >
               <Track
                 verticalMode={verticalMode}

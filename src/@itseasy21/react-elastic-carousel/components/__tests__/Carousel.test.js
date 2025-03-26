@@ -47,13 +47,13 @@ describe("Carousel - public API (props)", () => {
   it("verticalMode", () => {
     const wrapper = shallow(<Carousel verticalMode>{Items}</Carousel>);
     const slider = wrapper.find(Slider);
-    expect(slider.props().verticalMode).toEqual(true);
+    expect(slider.props().$verticalMode).toEqual(true);
   });
 
   it("isRTL", () => {
     const wrapper = shallow(<Carousel isRTL>{Items}</Carousel>);
     const slider = wrapper.find(Slider);
-    expect(slider.props().isRTL).toEqual(true);
+    expect(slider.props().$isRTL).toEqual(true);
   });
 
   it("pagination", () => {
