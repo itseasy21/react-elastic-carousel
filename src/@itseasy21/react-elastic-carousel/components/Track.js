@@ -3,19 +3,20 @@ import PropTypes from "prop-types";
 import { useSwipeable } from "react-swipeable";
 import { cssPrefix } from "../utils/helpers";
 import ItemWrapperContainer from "./ItemWrapperContainer";
+import consts from "../consts";
 
 const Track = ({
   children,
   childWidth,
   autoTabIndexVisibleItems,
-  enableSwipe,
-  enableMouseSwipe,
-  preventDefaultTouchmoveEvent,
+  enableSwipe = true,
+  enableMouseSwipe = true,
+  preventDefaultTouchmoveEvent = false,
   itemsToShow,
   itemsToScroll,
   currentItem,
-  itemPosition,
-  itemPadding,
+  itemPosition = consts.CENTER,
+  itemPadding = [0, 0, 0, 0],
   onSwiped,
   onSwiping,
   verticalMode,
@@ -51,7 +52,7 @@ const Track = ({
       >
         <ItemWrapperContainer
           id={idx}
-          itemPosition={itemPosition}
+          $itemPosition={itemPosition}
           style={{ width, padding: paddingStyle }}
           key={idx}
           onClick={onItemClick}

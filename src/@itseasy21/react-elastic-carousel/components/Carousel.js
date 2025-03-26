@@ -771,29 +771,37 @@ class Carousel extends React.Component {
       activeIndex,
       transitionMs
     } = this.state;
+
+    // Get base props from component props
     const {
       className,
       style,
-      itemsToShow,
-      itemsToScroll,
-      verticalMode,
-      isRTL,
-      easing,
-      tiltEasing,
-      children,
       focusOnSelect,
-      autoTabIndexVisibleItems,
-      itemPosition,
-      itemPadding,
-      outerSpacing,
-      enableSwipe,
-      enableMouseSwipe,
       pagination,
       showArrows,
-      disableArrowsOnEnd,
-      preventDefaultTouchmoveEvent,
       renderArrow,
-      renderPagination
+      renderPagination,
+      disableArrowsOnEnd
+    } = this.props;
+
+    // Get derived props that might be modified by breakpoints
+    const {
+      verticalMode,
+      isRTL,
+      children,
+      itemsToShow,
+      itemsToScroll,
+      itemPosition,
+      itemPadding,
+      // eslint-disable-next-line no-unused-vars
+      enableTilt, // Required for other methods but not used in render
+      tiltEasing,
+      easing,
+      outerSpacing,
+      autoTabIndexVisibleItems,
+      enableSwipe,
+      enableMouseSwipe,
+      preventDefaultTouchmoveEvent
     } = this.getDerivedPropsFromBreakPoint();
 
     const childWidth = this.calculateChildWidth();
@@ -810,7 +818,7 @@ class Carousel extends React.Component {
 
     return (
       <CarouselWrapper
-        isRTL={isRTL}
+        $isRTL={isRTL}
         className={`${cssPrefix("carousel-wrapper")} ${className}`}
         style={style}
       >
@@ -838,17 +846,17 @@ class Carousel extends React.Component {
             ref={this.setRef("sliderContainer")}
           >
             <Slider
-              verticalMode={verticalMode}
-              isRTL={isRTL}
-              easing={easing}
-              sliderPosition={sliderPosition}
-              swipedSliderPosition={swipedSliderPosition}
-              isSwiping={isSwiping}
-              transitionMs={transitionMs}
-              tiltEasing={tiltEasing}
+              $verticalMode={verticalMode}
+              $isRTL={isRTL}
+              $easing={easing}
+              $sliderPosition={sliderPosition}
+              $swipedSliderPosition={swipedSliderPosition}
+              $isSwiping={isSwiping}
+              $transitionMs={transitionMs}
+              $tiltEasing={tiltEasing}
               className={cssPrefix("slider")}
               ref={this.setRef("slider")}
-              outerSpacing={outerSpacing}
+              $outerSpacing={outerSpacing}
             >
               <Track
                 verticalMode={verticalMode}
