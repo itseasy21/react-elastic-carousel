@@ -9,6 +9,9 @@ build
 dist
 demo
 
+#cursor
+.cursor/
+
 # misc
 .DS_Store
 .env
