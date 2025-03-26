@@ -2,7 +2,7 @@ name: Pull Request Checks
 
 on:
   pull_request:
-    branches: [ master, main ]
+    branches: [ master, next ]
     types: [ opened, synchronize, reopened ]
 
 jobs:
