@@ -3,22 +3,29 @@ on:
   push:
     branches:
       - master
+      - main
 
 jobs:
   build-deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v2
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
       with:
-        node-version: 14
+        node-version: 16
+        cache: 'yarn'
 
-    - run: yarn set version 3.2.1
-    - run: yarn install
-    - run: npm install -g gatsby-cli
-    - run: yarn build
-    - run: yarn build-doc
-    - run: yarn test
+    - name: Install dependencies
+      run: yarn install
+
+    - name: Build library
+      run: yarn build
+
+    - name: Build documentation
+      run: yarn build-doc
+      
+    - name: Run tests
+      run: yarn test
 
     - name: Create Tag
       id: create_tag
@@ -35,7 +42,7 @@ jobs:
         filter-author: (renovate-bot|Renovate Bot)
         filter: '[R|r]elease[d]\s+[v|V]\d(\.\d+){0,2}'
 
-    - name: Deploy
+    - name: Deploy documentation
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -49,7 +56,7 @@ jobs:
         tag: ${{ steps.create_tag.outputs.version }}
         token: ${{ secrets.GITHUB_TOKEN }}
         body: |
-          [![](https://img.shields.io/badge/Open%20in-unpkg-blue)](https://uiwjs.github.io/npm-unpkg/#/pkg/@itseasy21/react-elastic-carousel@${{steps.changelog.outputs.version}}/file/README.md) [![Coverage Status](https://coveralls.io/repos/github/itseasy21/react-elastic-carousel/badge.svg?branch=main)](https://coveralls.io/github/itseasy21/react-elastic-carousel?branch=main) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@itseasy21/react-elastic-carousel)](https://www.npmjs.com/package/@itseasy21/react-elastic-carousel)
+          [![](https://img.shields.io/badge/Open%20in-unpkg-blue)](https://uiwjs.github.io/npm-unpkg/#/pkg/@itseasy21/react-elastic-carousel@${{steps.changelog.outputs.version}}/file/README.md) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@itseasy21/react-elastic-carousel)](https://www.npmjs.com/package/@itseasy21/react-elastic-carousel)
 
           ```bash
           npm i @itseasy21/react-elastic-carousel@${{steps.changelog.outputs.version}}
@@ -57,5 +64,8 @@ jobs:
           ${{ steps.changelog.outputs.compareurl }}
           ${{ steps.changelog.outputs.changelog }}
 
-    - run: npm install @jsdevtools/npm-publish -g
-    - run: npm-publish --token="${{ secrets.NPM_TOKEN }}" --access="public" ./package.json
+    - name: Publish to NPM
+      uses: JS-DevTools/npm-publish@v2
+      with:
+        token: ${{ secrets.NPM_TOKEN }}
+        access: public
