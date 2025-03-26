@@ -27,16 +27,17 @@
     "npm": ">=8"
   },
   "scripts": {
-    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider concurrently -r -k -s all \"docz dev\" \"yarn run lint:watch\"",
-    "demo": "cross-env NODE_OPTIONS=\"--openssl-legacy-provider --max-old-space-size=4096\" concurrently -r -k -s all \"rollup --bundleConfigAsCjs --config rollup.config.demo.js --watch --no-watch.chokidar\" \"yarn run lint:watch\"",
+    "set-node-options": "node -e \"process.stdout.write(process.version.startsWith('v16') ? '' : '--openssl-legacy-provider')\"",
+    "start": "cross-env NODE_OPTIONS=\"$(yarn run --silent set-node-options)\" concurrently -r -k -s all \"docz dev\" \"yarn run lint:watch\"",
+    "demo": "cross-env NODE_OPTIONS=\"$(yarn run --silent set-node-options) --max-old-space-size=4096\" concurrently -r -k -s all \"rollup --bundleConfigAsCjs --config rollup.config.demo.js --watch --no-watch.chokidar\" \"yarn run lint:watch\"",
     "lint:fix": "eslint src/* --fix",
     "lint:watch": "esw --watch --fix src/*",
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "prebuild": "yarn run lint:fix",
-    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider yarn run prebuild && rollup --bundleConfigAsCjs -c",
-    "build-doc": "cross-env NODE_OPTIONS=--openssl-legacy-provider docz build",
-    "deploy-doc": "cross-env NODE_OPTIONS=--openssl-legacy-provider gh-pages -d demo"
+    "build": "cross-env NODE_OPTIONS=\"$(yarn run --silent set-node-options)\" yarn run prebuild && rollup --bundleConfigAsCjs -c",
+    "build-doc": "cross-env NODE_OPTIONS=\"$(yarn run --silent set-node-options)\" docz build",
+    "deploy-doc": "cross-env NODE_OPTIONS=\"$(yarn run --silent set-node-options)\" gh-pages -d demo"
   },
   "lint-staged": {
     "*.js": "eslint src/. --fix"
