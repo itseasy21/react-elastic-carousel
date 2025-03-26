@@ -1,9 +1,6 @@
 import React from "react";
-// import { mount, shallow } from "enzyme";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Carousel from "../Carousel";
-// import Slider from "../styled/Slider";
-// import Pagination from "../Pagination/Pagination";
 import { numberToArray } from "../../utils/helpers";
 
 describe("Carousel - public API (props)", () => {
