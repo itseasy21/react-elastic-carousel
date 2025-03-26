@@ -127,3 +127,139 @@ IMPLEMENTATION CHECKLIST:
 17. Update package version in package.json according to semver
 18. Build package for distribution
 19. Verify final package works correctly 
+
+
+
+Updated Plan for React 19
+
+
+[MODE: PLAN]
+
+# Plan for Migrating from Enzyme to React Testing Library
+
+This migration plan outlines the steps needed to update our testing framework from Enzyme to React Testing Library, which is the recommended testing library for React 19 compatibility.
+
+## Overview of Changes
+
+The fundamental difference between Enzyme and React Testing Library is their approach to testing:
+- Enzyme focuses on implementation details, allowing direct access to component internals
+- React Testing Library focuses on user interactions and behavior, encouraging testing from the user's perspective
+
+## Dependencies Update
+
+We need to:
+1. Add new dependencies for React Testing Library
+2. Keep Enzyme temporarily for gradual migration
+3. Eventually remove Enzyme dependencies
+
+## Test File Structure Changes
+
+Each test file will need to be restructured to follow React Testing Library patterns:
+- Replace Enzyme's render methods with React Testing Library's render
+- Replace component selection with queries
+- Replace event simulation with fireEvent/userEvent
+- Update assertions to focus on visible content and accessible elements
+
+## Detailed Plan
+
+### Phase 1: Setup React Testing Library
+
+1. Add new dependencies to package.json:
+   ```json
+   "@testing-library/react": "^14.0.0",
+   "@testing-library/jest-dom": "^6.1.4",
+   "@testing-library/user-event": "^14.4.3"
+   ```
+
+2. Create a test setup file at `src/setupTests.js`:
+   ```javascript
+   import '@testing-library/jest-dom';
+   ```
+
+3. Update Jest configuration in package.json to use the setup file:
+   ```json
+   "jest": {
+     "setupFilesAfterEnv": [
+       "<rootDir>/src/setupTests.js"
+     ]
+   }
+   ```
+
+### Phase 2: Migrate Carousel Test
+
+Update `src/@itseasy21/react-elastic-carousel/components/__tests__/Carousel.test.js`:
+
+1. Replace imports:
+   - Remove Enzyme imports
+   - Add React Testing Library imports
+
+2. Update "renders without crashing" test:
+   - Replace shallow render with React Testing Library render
+
+3. Update "renders children" test:
+   - Replace mount with render
+   - Replace find with getByTestId or getAllByTestId
+
+4. Update "one child wont break on next" test:
+   - Replace mount with render
+   - Replace button finding with getByRole
+   - Replace simulate with fireEvent.click
+
+5. Update "renders with className in root" test:
+   - Replace class checking with container query
+
+6. Update "renders with style in root" test:
+   - Use container query and style check
+
+7. Update "verticalMode" test:
+   - Focus on visual/behavioral verification rather than prop checking
+
+8. Update "isRTL" test:
+   - Focus on checking if content is right-aligned
+
+9. Update "pagination" test:
+   - Check for pagination elements using appropriate queries
+
+10. Update "renderPagination" test:
+    - Check for custom pagination component rendering
+
+11. Update "outerSpacing" test:
+    - Focus on visual check of spacing
+
+12. Update "Carousel - public CSS classnames" test:
+    - Maintain class checking but use container queries
+
+### Phase 3: Migrate Other Tests
+
+1. Update `src/@itseasy21/react-elastic-carousel/reducers/__tests__/items.test.js`
+2. Update `src/@itseasy21/react-elastic-carousel/utils/__tests__/helpers.test.js`
+
+### Phase 4: Cleanup
+
+1. Remove Enzyme dependencies:
+   ```
+   enzyme
+   enzyme-adapter-react-16
+   ```
+
+2. Remove Enzyme adapter setup if present
+
+IMPLEMENTATION CHECKLIST:
+1. Install React Testing Library dependencies (@testing-library/react, @testing-library/jest-dom, @testing-library/user-event)
+2. Create setupTests.js file with React Testing Library setup
+3. Update Jest configuration in package.json
+4. Update imports in Carousel.test.js to use React Testing Library
+5. Replace shallow/mount with render in Carousel.test.js
+6. Replace component selection with appropriate queries in Carousel.test.js
+7. Replace event simulation with fireEvent/userEvent in Carousel.test.js
+8. Update assertions to focus on visible content and accessibility in Carousel.test.js
+9. Update test for verticalMode to check visual alignment
+10. Update test for isRTL to check right alignment
+11. Update test for pagination to check for pagination elements
+12. Update test for renderPagination to check for custom component
+13. Update test for outerSpacing to check actual spacing
+14. Update tests for public CSS classnames to use container queries
+15. Update items.test.js to use React Testing Library
+16. Update helpers.test.js to use React Testing Library
+17. Remove Enzyme dependencies once migration is complete
+18. Remove Enzyme adapter setup once migration is complete

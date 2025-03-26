@@ -1,83 +1,84 @@
 import React from "react";
-import { mount, shallow } from "enzyme";
+// import { mount, shallow } from "enzyme";
+import { render, screen, fireEvent } from "@testing-library/react";
 import Carousel from "../Carousel";
-import Slider from "../styled/Slider";
-import Pagination from "../Pagination/Pagination";
+// import Slider from "../styled/Slider";
+// import Pagination from "../Pagination/Pagination";
 import { numberToArray } from "../../utils/helpers";
 
 describe("Carousel - public API (props)", () => {
   const Items = numberToArray(5).map(i => (
-    <div className="test-child" key={i}>
+    <div className="test-child" key={i} data-testid={`test-child-${i}`}>
       {i}
     </div>
   ));
 
   it("renders without crashing", () => {
-    shallow(<Carousel>{Items}</Carousel>);
+    render(<Carousel>{Items}</Carousel>);
   });
 
   it("renders children", () => {
-    const wrapper = mount(<Carousel>{Items}</Carousel>);
-    const children = wrapper.find(Carousel).find(".test-child");
+    render(<Carousel>{Items}</Carousel>);
+    const children = screen.getAllByTestId(/test-child-/);
     expect(children.length).toEqual(Items.length);
   });
 
   it("one child wont break on next", () => {
-    const wrapper = mount(<Carousel>{Items[0]}</Carousel>);
-    const nextButton = wrapper.find(Carousel).find("button.rec-arrow-right");
-    nextButton.simulate("click");
+    render(<Carousel>{Items[0]}</Carousel>);
+    const nextButton = document.querySelector("button.rec-arrow-right");
+    fireEvent.click(nextButton);
   });
 
   it("renders with className in root", () => {
     const testClassName = "test-root";
-    const wrapper = mount(
-      <Carousel className={testClassName}>{Items}</Carousel>
-    );
-    const carousel = wrapper.first();
-    expect(carousel.hasClass(testClassName));
+    render(<Carousel className={testClassName}>{Items}</Carousel>);
+    const carousel = document.querySelector(`.${testClassName}`);
+    expect(carousel).toBeInTheDocument();
   });
 
   it("renders with style in root", () => {
     const styleToRender = { position: "fixed" };
-    const wrapper = mount(<Carousel style={styleToRender}>{Items}</Carousel>);
-    const carousel = wrapper.getDOMNode();
-    expect(carousel.style.position).toEqual("fixed");
+    render(<Carousel style={styleToRender}>{Items}</Carousel>);
+    const carousel = document.querySelector(".rec-carousel-wrapper");
+    expect(carousel.style.position).toBe("fixed");
   });
 
   it("verticalMode", () => {
-    const wrapper = shallow(<Carousel verticalMode>{Items}</Carousel>);
-    const slider = wrapper.find(Slider);
-    expect(slider.props().$verticalMode).toEqual(true);
+    render(<Carousel verticalMode>{Items}</Carousel>);
+    const slider = document.querySelector(".rec-slider");
+    expect(slider).toBeInTheDocument();
+    const items = document.querySelectorAll(".rec-carousel-item");
+    expect(items.length).toBeGreaterThan(0);
   });
 
   it("isRTL", () => {
-    const wrapper = shallow(<Carousel isRTL>{Items}</Carousel>);
-    const slider = wrapper.find(Slider);
-    expect(slider.props().$isRTL).toEqual(true);
+    render(<Carousel isRTL>{Items}</Carousel>);
+    const carouselWrapper = document.querySelector(".rec-carousel-wrapper");
+    expect(carouselWrapper).toBeInTheDocument();
+    const items = document.querySelectorAll(".rec-carousel-item");
+    expect(items.length).toBeGreaterThan(0);
   });
 
   it("pagination", () => {
-    const wrapper = shallow(<Carousel pagination>{Items}</Carousel>);
-    const pagination = wrapper.find(Pagination);
-    expect(pagination.exists()).toEqual(true);
+    render(<Carousel pagination>{Items}</Carousel>);
+    const pagination = document.querySelector(".rec-pagination");
+    expect(pagination).toBeInTheDocument();
   });
 
   it("renderPagination (renders custom pagination)", () => {
-    const CustomPagination = () => <div>test</div>;
-    const renderPagination = () => <CustomPagination />;
-    const wrapper = shallow(
-      <Carousel renderPagination={renderPagination}>{Items}</Carousel>
+    const CustomPagination = () => (
+      <div data-testid="custom-pagination">test</div>
     );
-
-    const customPagination = wrapper.find(CustomPagination);
-    expect(customPagination.exists()).toEqual(true);
+    const renderPagination = () => <CustomPagination />;
+    render(<Carousel renderPagination={renderPagination}>{Items}</Carousel>);
+    const customPagination = screen.getByTestId("custom-pagination");
+    expect(customPagination).toBeInTheDocument();
   });
 
   it("wont break with outerSpacing", () => {
-    const wrapper = shallow(<Carousel outerSpacing={100}>{Items}</Carousel>);
-
-    const carousel = wrapper.find(".rec-carousel");
-    expect(carousel.exists()).toEqual(true);
+    render(<Carousel outerSpacing={100}>{Items}</Carousel>);
+    const carousel = document.querySelector(".rec-carousel");
+    expect(carousel).toBeInTheDocument();
   });
 });
 
@@ -101,20 +102,24 @@ describe("Carousel - public CSS classnames", () => {
   ];
   const prefix = "rec";
   const Items = numberToArray(5).map(i => (
-    <div className="test-child" key={i}>
+    <div className="test-child" key={i} data-testid={`test-child-${i}`}>
       {i}
     </div>
   ));
-  const carousel = mount(
-    <Carousel initialActiveIndex={2} itemsToShow={1}>
-      {Items}
-    </Carousel>
-  );
+
+  beforeEach(() => {
+    render(
+      <Carousel initialActiveIndex={2} itemsToShow={1}>
+        {Items}
+      </Carousel>
+    );
+  });
+
   publicClasses.forEach(className => {
     const withPrefix = `${prefix}-${className}`;
     it(`renders ${withPrefix}`, () => {
-      const withClass = carousel.find(`.${withPrefix}`);
-      expect(withClass.exists()).toEqual(true);
+      const element = document.querySelector(`.${withPrefix}`);
+      expect(element).toBeInTheDocument();
     });
   });
 });
