@@ -11,8 +11,8 @@ describe("Dot", () => {
     expect(dot).toBeInTheDocument();
   });
 
-  it("applies active class when active prop is true", () => {
-    render(<Dot active />);
+  it("applies active class when $active prop is true", () => {
+    render(<Dot $active />);
     const dot = document.querySelector(".rec-dot_active");
     expect(dot).toBeInTheDocument();
   });
