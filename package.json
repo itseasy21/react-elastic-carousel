@@ -1,9 +1,9 @@
 {
   "name": "@itseasy21/react-elastic-carousel",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A flexible and responsive carousel component for react",
   "author": "itseasy21",
-  "type": "commonjs",
+  "type": "module",
   "contributors": [
     {
       "name": "sag1v (Sagiv Ben Giat)"
@@ -17,6 +17,13 @@
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "jsnext:main": "dist/index.es.js",
   "publishConfig": {
     "registry": "https://registry.npmjs.org"
