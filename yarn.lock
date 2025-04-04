@@ -2992,7 +2992,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.23.7":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.22.6, @babel/runtime@npm:^7.23.7":
   version: 7.27.0
   resolution: "@babel/runtime@npm:7.27.0"
   dependencies:
@@ -3409,7 +3409,7 @@ __metadata:
     "@testing-library/jest-dom": ^6.6.3
     "@testing-library/react": ^16.2.0
     "@testing-library/user-event": ^14.6.1
-    "@uiw/react-only-when": ^1.0.6
+    "@uiw/react-only-when": ^3.0.1
     babel-eslint: ^9.0.0
     classnames: ^2.3.2
     concurrently: ^4.1.0
@@ -4995,14 +4995,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@uiw/react-only-when@npm:^1.0.6":
-  version: 1.0.6
-  resolution: "@uiw/react-only-when@npm:1.0.6"
+"@uiw/react-only-when@npm:^3.0.1":
+  version: 3.0.1
+  resolution: "@uiw/react-only-when@npm:3.0.1"
+  dependencies:
+    "@babel/runtime": ^7.22.6
   peerDependencies:
     "@babel/runtime": ">=7.10.0"
-    react: ">=16.9.0"
-    react-dom: ">=16.9.0"
-  checksum: 7673208608b6a30807725367a2f13e3eb0819961b2c8a5d1484639e5673e9f60805f8b5645d5af3df9ad46932d08c1d75074a55ae2e5e0290d8f2f2248a44f45
+    react: ">=18.0.0"
+    react-dom: ">=18.0.0"
+  checksum: aed8d6322c1edffe120f11715ab8035d13cadfc2d20d5ef17da824441aa7fb824521d2e2add55282d1a5b38343727dfe12d7d4ee1a6a058b7923f6421d257ecd
   languageName: node
   linkType: hard
 
