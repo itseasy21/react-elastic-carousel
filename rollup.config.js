@@ -12,7 +12,7 @@ import fs from "fs";
 const pkg = JSON.parse(fs.readFileSync("./package.json", "utf8"));
 
 // Use require for libName since it's a CommonJS module
-const libName = require("./libName");
+const libName = require("./libName.cjs");
 
 export default defineConfig({
   input: `src/${libName}/index.js`,
@@ -21,12 +21,15 @@ export default defineConfig({
       file: pkg.main,
       format: "cjs",
       sourcemap: true,
-      exports: "named"
+      exports: "named",
+      esModule: false,
+      interop: "auto"
     },
     {
       file: pkg.module,
       format: "es",
-      sourcemap: true
+      sourcemap: true,
+      exports: "named"
     }
   ],
   plugins: [
@@ -43,15 +46,20 @@ export default defineConfig({
     babel({
       exclude: "node_modules/**",
       babelHelpers: "runtime",
-      presets: ["@babel/preset-env", "@babel/preset-react"],
+      presets: [
+        ["@babel/preset-env", { modules: false }],
+        ["@babel/preset-react", { runtime: "automatic" }]
+      ],
       plugins: ["@babel/plugin-transform-runtime"]
     }),
     nodeResolve({
-      browser: true
+      browser: true,
+      extensions: [".js", ".jsx"]
     }),
     commonjs({
       include: "node_modules/**",
-      requireReturnsDefault: "auto"
+      requireReturnsDefault: "auto",
+      transformMixedEsModules: true
     }),
     copy({
       targets: [{ src: `src/${libName}/index.d.ts`, dest: "dist" }]
