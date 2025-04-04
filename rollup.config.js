@@ -12,7 +12,7 @@ import fs from "fs";
 const pkg = JSON.parse(fs.readFileSync("./package.json", "utf8"));
 
 // Use require for libName since it's a CommonJS module
-const libName = require("./libName");
+const libName = require("./libName.cjs");
 
 export default defineConfig({
   input: `src/${libName}/index.js`,
