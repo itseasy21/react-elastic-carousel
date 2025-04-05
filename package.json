@@ -47,7 +47,8 @@
     "deploy-doc": "cross-env NODE_OPTIONS=\"$(yarn run --silent set-node-options)\" gh-pages -d demo",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "yarn build && changeset publish"
+    "release": "yarn build && changeset publish",
+    "prepare": "yarn build"
   },
   "lint-staged": {
     "*.js": "eslint src/. --fix"
