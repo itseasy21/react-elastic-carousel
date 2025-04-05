@@ -50,7 +50,6 @@
     "*.js": "eslint src/. --fix"
   },
   "dependencies": {
-    "@uiw/react-only-when": "^3.0.1",
     "classnames": "^2.3.2",
     "prop-types": "^15.8.1",
     "react-swipeable": "^7.0.2",
