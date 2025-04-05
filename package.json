@@ -44,7 +44,10 @@
     "prebuild": "yarn run lint:fix",
     "build": "vite build",
     "build-doc": "cross-env NODE_OPTIONS=\"$(yarn run --silent set-node-options)\" docz build",
-    "deploy-doc": "cross-env NODE_OPTIONS=\"$(yarn run --silent set-node-options)\" gh-pages -d demo"
+    "deploy-doc": "cross-env NODE_OPTIONS=\"$(yarn run --silent set-node-options)\" gh-pages -d demo",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "yarn build && changeset publish"
   },
   "lint-staged": {
     "*.js": "eslint src/. --fix"
@@ -84,6 +87,7 @@
     "@babel/preset-env": "^7.23.7",
     "@babel/preset-react": "^7.23.3",
     "@babel/runtime": "^7.23.7",
+    "@changesets/cli": "^2.28.1",
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
