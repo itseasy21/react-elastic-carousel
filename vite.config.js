@@ -44,7 +44,7 @@ export default defineConfig({
     },
     rollupOptions: {
       // Externalize peer dependencies
-      external: [...Object.keys(pkg.peerDependencies || {})],
+      external: [...Object.keys(pkg.peerDependencies || {}), 'react/jsx-runtime'],
       output: {
         // Provide global variables for UMD build (optional)
         globals: {
