@@ -1,7 +1,6 @@
 import React, { Children } from "react";
 import PropTypes from "prop-types";
 import ResizeObserver from "resize-observer-polyfill";
-import Only from "@uiw/react-only-when";
 import Track from "./Track";
 import Arrow from "./Arrow";
 import consts from "../consts";
@@ -826,8 +825,8 @@ class Carousel extends React.Component {
           className={cssPrefix("carousel")}
           size={{ height: rootHeight }}
         >
-          <Only when={showArrows}>
-            {renderArrow ? (
+          {showArrows &&
+            (renderArrow ? (
               renderArrow({
                 type: consts.PREV,
                 onClick: this.onPrevStart,
@@ -839,8 +838,7 @@ class Carousel extends React.Component {
                 direction={verticalMode ? Arrow.up : Arrow.left}
                 disabled={disabledPrevArrow}
               />
-            )}
-          </Only>
+            ))}
           <SliderContainer
             className={cssPrefix("slider-container")}
             ref={this.setRef("sliderContainer")}
@@ -877,8 +875,8 @@ class Carousel extends React.Component {
               />
             </Slider>
           </SliderContainer>
-          <Only when={showArrows}>
-            {renderArrow ? (
+          {showArrows &&
+            (renderArrow ? (
               renderArrow({
                 type: consts.NEXT,
                 onClick: this.onNextStart,
@@ -890,11 +888,10 @@ class Carousel extends React.Component {
                 direction={verticalMode ? Arrow.down : Arrow.right}
                 disabled={disabledNextArrow}
               />
-            )}
-          </Only>
+            ))}
         </StyledCarousel>
-        <Only when={pagination}>
-          {renderPagination ? (
+        {pagination &&
+          (renderPagination ? (
             renderPagination({
               pages: pages,
               activePage,
@@ -906,8 +903,7 @@ class Carousel extends React.Component {
               activePage={activePage}
               onClick={this.onIndicatorClick}
             />
-          )}
-        </Only>
+          ))}
       </CarouselWrapper>
     );
   }
