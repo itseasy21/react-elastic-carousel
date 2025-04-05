@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
-import Carousel from "../Carousel";
+import Carousel from "../Carousel.jsx";
 import { numberToArray } from "../../utils/helpers";
 
 describe("Carousel - public API (props)", () => {

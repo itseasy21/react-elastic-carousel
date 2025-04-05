@@ -1,8 +1,8 @@
 import React, { Children } from "react";
 import PropTypes from "prop-types";
 import ResizeObserver from "resize-observer-polyfill";
-import Track from "./Track";
-import Arrow from "./Arrow";
+import Track from "./Track.jsx";
+import Arrow from "./Arrow.jsx";
 import consts from "../consts";
 import { activeIndexReducer } from "../reducers/items";
 import { nextItemAction, prevItemAction } from "../actions/itemsActions";
