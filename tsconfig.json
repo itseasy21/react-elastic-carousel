@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "skipLibCheck": true,
+    // Add other relevant options if needed, but start minimal
+    "jsx": "react-jsx" // Ensure JSX is handled correctly
+  },
+  "include": ["src"], // Adjust if your source files are elsewhere
+  "exclude": ["node_modules", "dist"]
+}
