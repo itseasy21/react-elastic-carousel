@@ -124,8 +124,7 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-serve": "^1.1.0",
-    "rollup-plugin-url": "^3.0.1",
-    "styled-components": "^6.1.15"
+    "rollup-plugin-url": "^3.0.1"
   },
   "files": [
     "dist"
