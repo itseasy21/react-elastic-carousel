@@ -28,9 +28,9 @@ jobs:
       uses: actions/cache@v6
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-node-22-yarn-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-node-26-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-node-22-yarn-
+          ${{ runner.os }}-node-26-yarn-
 
     - name: Install dependencies
       run: yarn install
@@ -75,6 +75,7 @@ jobs:
         name: ${{ steps.create_tag.outputs.version }}
         tag: ${{ steps.create_tag.outputs.version }}
         token: ${{ secrets.GITHUB_TOKEN }}
+        skipIfReleaseExists: true
         body: |
           [![](https://img.shields.io/badge/Open%20in-unpkg-blue)](https://uiwjs.github.io/npm-unpkg/#/pkg/@itseasy21/react-elastic-carousel@${{steps.changelog.outputs.version}}/file/README.md) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@itseasy21/react-elastic-carousel)](https://www.npmjs.com/package/@itseasy21/react-elastic-carousel)
 
