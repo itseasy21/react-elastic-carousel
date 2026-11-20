@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "../../utils/styled";
 
 export default styled.button.attrs(({ type = "button" }) => ({ type }))`
   box-sizing: border-box;

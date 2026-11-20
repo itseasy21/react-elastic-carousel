@@ -48,7 +48,7 @@ export default defineConfig({
       babelHelpers: "runtime",
       presets: [
         ["@babel/preset-env", { modules: false }],
-        ["@babel/preset-react", { runtime: "automatic" }]
+        ["@babel/preset-react", { runtime: "classic" }]
       ],
       plugins: ["@babel/plugin-transform-runtime"]
     }),
@@ -67,7 +67,6 @@ export default defineConfig({
   ],
   external: [
     ...Object.keys(pkg.dependencies || {}),
-    ...Object.keys(pkg.peerDependencies || {}),
-    "react/jsx-runtime"
+    ...Object.keys(pkg.peerDependencies || {})
   ]
 });
