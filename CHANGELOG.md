@@ -3,6 +3,19 @@
 We use [Semantic Versioning](http://semver.org/).  
 Each release can be found in the Github [Releases page](https://github.com/itseasy21/react-elastic-carousel/releases).
 
+## 2.0.0
+
+### Breaking Changes
+- Updated minimum Node.js requirement to v22 (supported LTS lines only)
+
+### Features
+- CommonJS consumers load `dist/index.cjs`; native ESM loads `dist/index.es.js` via `exports`
+- styled-components v5 and v6 both supported in Node, bundlers, and Yarn/PnP consumers
+- React 16.8.3 through 19 verified, including direct Node ESM imports on React 16
+- Packed-package smoke tests cover npm, Yarn, and pnpm consumers
+- CI matrix covers Node 22, 24, and 26; release pipeline builds on Node 26
+- Release pipeline is fully version-driven: tag, GitHub release, and npm publish run automatically on `master` when `package.json` changes
+
 ## 1.0.0 (Unreleased)
 
 ### Breaking Changes
