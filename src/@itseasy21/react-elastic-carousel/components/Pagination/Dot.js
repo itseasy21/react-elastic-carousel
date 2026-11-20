@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
+import styled from "../../utils/styled";
 import { cssPrefix } from "../../utils/helpers";
 
 const boxShadow = "0 0 1px 2px rgba(0, 0, 0, 0.5)";

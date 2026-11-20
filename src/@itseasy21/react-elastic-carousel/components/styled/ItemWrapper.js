@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "../../utils/styled";
 import PropTypes from "prop-types";
 import { cssPrefix } from "../../utils/helpers";
 import consts from "../../consts";

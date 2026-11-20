@@ -14,14 +14,15 @@
     "type": "git",
     "url": "https://github.com/itseasy21/react-elastic-carousel.git"
   },
-  "main": "dist/index.js",
+  "main": "dist/index.cjs",
   "module": "dist/index.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.es.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.cjs",
+      "default": "./dist/index.es.js"
     }
   },
   "jsnext:main": "dist/index.es.js",
@@ -30,7 +31,7 @@
   },
   "packageManager": "yarn@3.2.1",
   "engines": {
-    "node": ">=16",
+    "node": ">=22",
     "npm": ">=8"
   },
   "scripts": {
@@ -40,6 +41,7 @@
     "lint:fix": "eslint src/* --fix",
     "lint:watch": "esw --watch --fix src/*",
     "test": "cross-env CI=1 react-scripts test --env=jsdom",
+    "test:package": "node scripts/test-package-exports.mjs",
     "test:watch": "react-scripts test --env=jsdom",
     "prebuild": "yarn run lint:fix",
     "build": "cross-env NODE_OPTIONS=\"$(yarn run --silent set-node-options)\" yarn run prebuild && rollup --bundleConfigAsCjs -c",

@@ -15,6 +15,8 @@ protecting existing users before introducing a new major version.
 
 - Verify ESM, CommonJS, bundler, and package `exports` behavior.
 - Test packed-package installs with npm, Yarn, and pnpm.
+- Build releases on the latest Node.js LTS and test every supported LTS line.
+- Drop End-of-Life Node.js versions from the compatibility policy promptly.
 - Test supported Node and React versions using real consumer fixtures.
 - Publish compatibility fixes before starting larger changes.
 

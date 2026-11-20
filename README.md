@@ -29,7 +29,7 @@ yarn add @itseasy21/react-elastic-carousel
 
 ## Requirements
 
-- Node.js >= 16
+- Node.js >= 22 (a supported LTS release)
 - React 16.8.3 - 19
 - React DOM 16.8.3 - 19
 - Yarn 3.2.1 (for development)

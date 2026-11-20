@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "../../utils/styled";
 
 const calcLeft = ({
   $isRTL,
