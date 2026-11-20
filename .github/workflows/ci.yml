@@ -28,9 +28,9 @@ jobs:
       uses: actions/cache@v6
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-node-22-yarn-${{ hashFiles('**/yarn.lock') }}
+        key: ${{ runner.os }}-node-26-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-node-22-yarn-
+          ${{ runner.os }}-node-26-yarn-
 
     - name: Install dependencies
       run: yarn install
@@ -47,20 +47,25 @@ jobs:
     - name: Run tests
       run: yarn test
 
-    - name: Create Tag
-      id: create_tag
-      uses: jaywcjlove/create-tag-action@main
-      with:
-        package-path: ./package.json
-
-    - name: Generate Changelog
-      id: changelog
-      uses: jaywcjlove/changelog-generator@main
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        head-ref: ${{steps.create_tag.outputs.version}}
-        filter-author: (renovate-bot|Renovate Bot)
-        filter: '[R|r]elease[d]\s+[v|V]\d(\.\d+){0,2}'
+    - name: Resolve package version
+      id: version
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        tag=v$(node -p "require('./package.json').version")
+        echo "tag=$tag" >> "$GITHUB_OUTPUT"
+        # The singular /git/ref/ endpoint requires an exact match; the plural
+        # /git/refs/ endpoint also matches prefixes (e.g. prerelease tags).
+        if gh api "repos/${{ github.repository }}/git/ref/tags/$tag" --silent; then
+          echo "tag_exists=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "tag_exists=false" >> "$GITHUB_OUTPUT"
+        fi
+        if gh api "repos/${{ github.repository }}/releases/tags/$tag" --silent; then
+          echo "release_exists=true" >> "$GITHUB_OUTPUT"
+        else
+          echo "release_exists=false" >> "$GITHUB_OUTPUT"
+        fi
 
     - name: Deploy documentation
       uses: peaceiris/actions-gh-pages@v3
@@ -68,24 +73,34 @@ jobs:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         publish_dir: ./demo
 
+    - name: Create Tag
+      if: steps.version.outputs.tag_exists == 'false'
+      run: |
+        git config user.name github-actions
+        git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+        git tag ${{ steps.version.outputs.tag }}
+        git push origin ${{ steps.version.outputs.tag }}
+
     - name: Create Release
       uses: ncipollo/release-action@v1
-      if: steps.create_tag.outputs.successful
+      if: steps.version.outputs.release_exists == 'false'
       with:
-        name: ${{ steps.create_tag.outputs.version }}
-        tag: ${{ steps.create_tag.outputs.version }}
+        name: ${{ steps.version.outputs.tag }}
+        tag: ${{ steps.version.outputs.tag }}
         token: ${{ secrets.GITHUB_TOKEN }}
+        generateReleaseNotes: true
+        skipIfReleaseExists: true
         body: |
-          [![](https://img.shields.io/badge/Open%20in-unpkg-blue)](https://uiwjs.github.io/npm-unpkg/#/pkg/@itseasy21/react-elastic-carousel@${{steps.changelog.outputs.version}}/file/README.md) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@itseasy21/react-elastic-carousel)](https://www.npmjs.com/package/@itseasy21/react-elastic-carousel)
+          [![](https://img.shields.io/badge/Open%20in-unpkg-blue)](https://uiwjs.github.io/npm-unpkg/#/pkg/@itseasy21/react-elastic-carousel@${{ steps.version.outputs.tag }}/file/README.md) [![npm bundle size](https://img.shields.io/bundlephobia/minzip/@itseasy21/react-elastic-carousel)](https://www.npmjs.com/package/@itseasy21/react-elastic-carousel)
 
           ```bash
-          npm i @itseasy21/react-elastic-carousel@${{steps.changelog.outputs.version}}
+          npm i @itseasy21/react-elastic-carousel@${{ steps.version.outputs.tag }}
           ```
-          ${{ steps.changelog.outputs.compareurl }}
-          ${{ steps.changelog.outputs.changelog }}
 
     - name: Publish to NPM
       uses: JS-DevTools/npm-publish@v2
+      # Always runs: npm-publish skips versions already on the registry, so a
+      # rerun can still publish after a failed release attempt.
       with:
         token: ${{ secrets.NPM_TOKEN }}
         access: public
