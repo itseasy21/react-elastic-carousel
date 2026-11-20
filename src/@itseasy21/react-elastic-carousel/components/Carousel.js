@@ -1,4 +1,4 @@
-import React, { Children } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import ResizeObserver from "resize-observer-polyfill";
 import Track from "./Track";
@@ -14,6 +14,8 @@ import {
 } from "./styled";
 import { pipe, noop, cssPrefix, numberToArray } from "../utils/helpers";
 import { Pagination } from "./Pagination";
+
+const { Children } = React;
 
 class Carousel extends React.Component {
   isComponentMounted = false;

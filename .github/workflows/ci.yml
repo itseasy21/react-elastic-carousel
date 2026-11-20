@@ -9,13 +9,14 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
+    - uses: actions/checkout@v7
+    - uses: actions/setup-node@v7
       with:
-        node-version: '22'
+        node-version: '26'
 
     - name: Setup Yarn
       run: |
+        npm install --global corepack@0.36.0
         corepack enable
         yarn set version 3.2.1
 
@@ -24,7 +25,7 @@ jobs:
       run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
     - name: Cache node modules
-      uses: actions/cache@v4
+      uses: actions/cache@v6
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: ${{ runner.os }}-node-22-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -36,6 +37,9 @@ jobs:
 
     - name: Build library
       run: yarn build
+
+    - name: Verify package exports
+      run: yarn test:package
 
     - name: Build documentation
       run: yarn build-doc

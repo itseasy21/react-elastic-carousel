@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from "../../utils/styled";
 
 export default styled.div.attrs(props => ({
   style: {

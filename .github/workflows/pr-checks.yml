@@ -11,18 +11,19 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16, 18, 20, 22]
+        node-version: [22, 24, 26]
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Setup Yarn
         run: |
+          npm install --global corepack@0.36.0
           corepack enable
           yarn set version 3.2.1
 
@@ -31,7 +32,7 @@ jobs:
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -47,6 +48,9 @@ jobs:
       - name: Build
         run: yarn build
 
+      - name: Verify package exports
+        run: yarn test:package
+
       - name: Run tests
         run: yarn test
 
@@ -56,7 +60,7 @@ jobs:
     strategy:
       matrix:
         react-version: [16.8.3, 18.x, 19.x]
-        node-version: [16, 18, 20, 22]
+        node-version: [22, 24, 26]
         include:
           - react-version: 16.8.3
             testing-library-react-version: "12.1.5"
@@ -66,15 +70,16 @@ jobs:
             testing-library-react-version: "14.1.2"
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: ${{ matrix.node-version }}
 
       - name: Setup Yarn
         run: |
+          npm install --global corepack@0.36.0
           corepack enable
           yarn set version 3.2.1
 
@@ -83,7 +88,7 @@ jobs:
         run: echo "dir=$(yarn config get cacheFolder)" >> $GITHUB_OUTPUT
 
       - name: Cache node modules
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-yarn-${{ hashFiles('**/yarn.lock') }}-react-${{ matrix.react-version }}
@@ -102,5 +107,69 @@ jobs:
       - name: Build with React ${{ matrix.react-version }}
         run: yarn build
 
+      - name: Verify package exports with React ${{ matrix.react-version }}
+        run: yarn test:package
+
       - name: Test with React ${{ matrix.react-version }}
-        run: yarn test 
+        run: yarn test
+
+  package-managers:
+    name: Install with ${{ matrix.package-manager }} and styled-components ${{ matrix.styled-components }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - package-manager: npm
+            styled-components: 5.3.11
+          - package-manager: npm
+            styled-components: 6
+          - package-manager: yarn
+            styled-components: 6
+          - package-manager: pnpm
+            styled-components: 6
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 26
+
+      - name: Setup package managers
+        run: |
+          npm install --global corepack@0.36.0
+          corepack enable
+          corepack prepare yarn@3.2.1 --activate
+          corepack prepare pnpm@9 --activate
+
+      - name: Build package
+        run: |
+          yarn install
+          yarn build
+          yarn pack --out /tmp/react-elastic-carousel.tgz
+
+      - name: Install packed package
+        working-directory: /tmp
+        run: |
+          mkdir consumer
+          cd consumer
+          printf '{"private":true,"type":"module"}\n' > package.json
+          case "${{ matrix.package-manager }}" in
+            npm)
+              npm install /tmp/react-elastic-carousel.tgz react@18 react-dom@18 styled-components@${{ matrix.styled-components }}
+              ;;
+            yarn)
+              printf 'nodeLinker: node-modules\n' > .yarnrc.yml
+              yarn add @itseasy21/react-elastic-carousel@file:/tmp/react-elastic-carousel.tgz react@18 react-dom@18 styled-components@${{ matrix.styled-components }}
+              ;;
+            pnpm)
+              pnpm add /tmp/react-elastic-carousel.tgz react@18 react-dom@18 styled-components@${{ matrix.styled-components }}
+              ;;
+          esac
+
+      - name: Verify CommonJS and ES module imports
+        working-directory: /tmp/consumer
+        run: |
+          node -e 'const value = require("@itseasy21/react-elastic-carousel"); if (typeof (value.default || value) !== "function") process.exit(1)'
+          node --input-type=module -e 'import Carousel from "@itseasy21/react-elastic-carousel"; if (typeof Carousel !== "function") process.exit(1)'
